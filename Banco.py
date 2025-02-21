@@ -18,7 +18,6 @@ class Cuenta:
     def __init__(self, titular, cantidad):
         self.titular = titular
         self.cantidad = cantidad
-        self.add()
 
     def add(self):
         lista_clientes.append(
@@ -42,15 +41,15 @@ class Cuenta:
 
 
 class Plazo_Fijo(Cuenta):
-    def __init__(self, titular, cantidad, plazo, interes):
-        super().__init__(titular, cantidad)
+    def __init__(self, titular, cantidad = 0, plazo = 0, interes = 0):
+        super().__init__(titular, cantidad)     
         self.plazo = plazo
         self.interes = interes
-        self.add()
         
     def add(self):
         for cliente in lista_clientes:
             if cliente["Titular"] == self.titular:
+                cliente["Interes"] = self.interes
                 cliente["Plazo"] = self.plazo
                 
                 
@@ -77,7 +76,8 @@ while True:
     if opcion == 1:
         titular = input("Nombre del titular: ")
         cantidad = int(input("Cantidad: "))
-        Cuenta(titular, cantidad)
+        client =  Cuenta(titular, cantidad)
+        client.add()
         
     elif opcion == 2:
         nombre = input("Nombre a remover: ")
@@ -87,10 +87,15 @@ while True:
         titular = input("Nombre: ")
         plazo = int(input("Meses para el CDT: "))
         interes = float(input("Interes: "))
+
+        print("interes: ", interes)
+        print("plazo: ", plazo)
+
         for cliente in lista_clientes:
             if cliente["Titular"] == titular:
                 cantidad = cliente["Cantidad"]
-                Plazo_Fijo(titular, cantidad, plazo, interes)
+                cdt = Plazo_Fijo("TEST", cantidad, plazo, interes)
+                cdt.add()
         
     else:
         print(lista_clientes)
