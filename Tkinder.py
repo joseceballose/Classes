@@ -1,24 +1,26 @@
-import tkinter
+import tkinter as tk
+win = tk.Tk()
+win.geometry("")
+botones = [
+    ['a'],
+    ['7', '8', '9', '/'],
+    ['4', '5', '6', '*'],
+    ['1', '2', '3', '-'],
+    ['0', '.', '=', '+']
+]
 
-win = tkinter.Tk()
 
-win.geometry("450x270")
-win.configure(bg = "#fff")
-win.title("Text Widget")
-text = tkinter.Entry()
+for row, filas in enumerate(botones):
+    for column, text in enumerate(filas):
+        button = tk.Button(win, text=f"{text}")
+        if text == 'a':
+            text = tk.Label(win, text="operacion")
+            text.grid(row=row, column=column, columnspan=4, padx=5, pady=5, sticky="nsew")
+        else:
+            button.grid(row=row, column=column, padx=5, pady=5, sticky="nsew")
+        win.grid_rowconfigure(row, weight=1)
+        win.grid_columnconfigure(column, weight=1)
 
-def funcion_edad():
-    window = tkinter.Tk()
-    window.geometry("200x150")
-    boxtext = tkinter.Entry(window)
-    boxtext.pack()
-    
-    def mostrar():
-       return print(boxtext.get())
-    boton1 = tkinter.Button(window, text="click", command=mostrar)
-    boton1.pack()
 
-boton = tkinter.Button(win, text="click", command=funcion_edad)
-boton.pack()
-
-tkinter.mainloop()
+if __name__ == "__main__":
+    win.mainloop()
