@@ -50,4 +50,3 @@ if __name__ == "__main__":
     win = Tk()
     app = Calculadora(win)
     win.mainloop()
-    
