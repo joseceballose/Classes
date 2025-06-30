@@ -22,8 +22,32 @@ NAME_ENTERPRISE = 'PEPSI S.A.S'
 CURRECT_YEAR = datetime.now().year
 
 
-def calculate_values(puesto, antiguedad): 
-    
+def calculate_values(name, last_name, puesto, antiguedad): 
+    if puesto == "Gerente":
+        if antiguedad == 1:
+            days = 12
+        elif antiguedad < 5:
+            days = 24
+        else:
+            days = 36
+            
+    if puesto == "Supervisor":
+        if antiguedad == 1:
+            days = 10
+        elif antiguedad < 5:
+            days = 20
+        else:
+            days = 30
+            
+    else:
+        if antiguedad == 1:
+            days = 6
+        elif antiguedad < 5:
+            days = 14
+        else:
+            days = 20
+            
+    messagebox.showinfo("Informacion", f"{name} {last_name} tiene {days} días de descanso")
 
 
 class WindowCentral(tk.Tk):
@@ -50,7 +74,7 @@ class WindowCentral(tk.Tk):
 
     
     def login(self):
-        name = self.name_user.get().strip()
+        name = self.name_user.get().strip().title()
         if not name: 
             messagebox.showerror("Error", "Por favor ingresa tú nombre")
             return
@@ -65,16 +89,78 @@ class WindowTerms(tk.Toplevel):
         self.iconbitmap('icono.ico')
         self.resizable(False, False)
         self.name_user = name_user
-        text = f"{name_user} Aceptas qué al usar la aplicación debe ingresar datos personales qué serán     unicamenten usados para el cáculo den vacaciones según la politica de la empresa"
-        tk.Label(self, text=text, wraplength=350, justify='left').pack(pady=15)
+        text = f"{name_user} aceptas qué al usar la aplicación debe ingresar datos personales qué serán unicamenten usados para el cáculo den vacaciones según la politica de la empresa"
+        tk.Label(self, text=text, wraplength=350, justify='center').pack(pady=15)
         self.term = tk.BooleanVar()
-        tk.Checkbutton(self, text="Acepto los terminos", variable=self.term).pack(pady=10)
+        tk.Checkbutton(self, text="Acepto los terminos", variable=self.term, font="5").pack(pady=10)
         tk.Button(self, text='Continuar', command=self.nextSteep).pack(pady=10)
 
     def nextSteep(self): 
         if not self.term.get(): 
             messagebox.showerror("Error", "Debes aceptar los terminos")
             return
+        self.withdraw()
+        WindowCalculate(self)
+
+
+class WindowCalculate(tk.Toplevel):
+    def __init__(self, master):
+        super().__init__(master)
+        self.title('Cálculo días de vacaciones')
+        self.geometry('400x300')
+        self.iconbitmap('icono.ico')
+        self.resizable(False, False)
+
+        # Frame 1: Datos personales
+        self.frame1 = tk.Frame(self)
+        self.frame1.grid(column=0, row=0, padx=5, sticky="w")
+
+        tk.Label(self.frame1, text="Nombres: ", font="Arial, 11").grid(column=0, row=0, padx=5, pady=5)
+        self.name = tk.Entry(self.frame1)
+        self.name.grid(column=1, row=0)
+
+        tk.Label(self.frame1, text="Apellidos: ", font="Arial, 11").grid(column=0, row=1, padx=5, pady=5)
+        self.last_name = tk.Entry(self.frame1)
+        self.last_name.grid(column=1, row=1)
+
+        tk.Label(self.frame1, text="Estatus: ", font="Arial, 11").grid(column=0, row=2, padx=5, pady=5)
+        self.status = ("Gerente", "Supervisor", "Empleado")
+        self.option = ttk.Combobox(self.frame1, values=self.status, state="readonly")
+        self.option.grid(column=1, row=2)
+
+        # Frame 2: Antigüedad
+        self.frame2 = tk.Frame(self)
+        self.frame2.grid(column=0, row=1, padx=5, sticky="w")
+
+        tk.Label(self.frame2, text="Años trabajados: ", font="Arial, 11").grid(column=0, row=0, padx=5, pady=5)
+        self.age = tk.Entry(self.frame2)
+        self.age.grid(column=1, row=0)
+
+        # Botones
+        self.frame3 = tk.Frame(self)
+        self.frame3.grid(column=0, row=2, pady=15)
+
+        self.calculate = tk.Button(self.frame3, text="Calcular", command=self.calcular)
+        self.calculate.grid(column=2, row=0, padx=10)
+
+        self.exit = tk.Button(self.frame3, text="Salir", command=self.quit)
+        self.exit.grid(column=2, row=1, padx=10, pady=10)
+
+    def calcular(self):
+        name = self.name.get().strip().title()
+        last_name = self.last_name.get().strip().title()
+        puesto = self.option.get()
+        antiguedad = self.age.get()
+        if not name or not last_name or not puesto or not antiguedad:
+            messagebox.showerror("error", "Datos insuficientes")
+        antiguedad = int(antiguedad)
+        if antiguedad < 1:
+            messagebox.showerror("error", "Antiguedad insuficiente")
+        calculate_values(name, last_name, puesto, antiguedad)
+
+    
+       
+
 
 if __name__ == "__main__":
     app = WindowCentral()

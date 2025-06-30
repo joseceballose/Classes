@@ -5,10 +5,10 @@ class Calculadora():
     def __init__(self, win):
         self.win = win
         self.win.title("Calculadora")
-        self.win.geometry("450x300")
+        self.win.geometry("300x450")
         self.win.configure(bg="#2E2E2E")
 
-        self.Widgets()
+        self.widgets()
             
     def show(self, text):
         if text == "=":
@@ -27,10 +27,10 @@ class Calculadora():
             new_text = self.cuadro_texto.cget("text") + text
             self.cuadro_texto.config(text=new_text)
         
-    def Widgets(self):
+    def widgets(self):
         self.cuadro_texto = tk.Label(win, font=("Helvetica", 16), text="", )
         self.cuadro_texto.grid(row=0, column=1, columnspan=3, padx=2, pady=2, sticky="nsew")
-        self.clear_button = tk.Button(win, text="CE", command=lambda: self.show("CE"),  bg="grey", fg="white",).grid(row=0, column=0, padx=2, pady=2)
+        self.clear_button = tk.Button(win, text="CE", command=lambda: self.show("CE"),  bg="grey", fg="white").grid(row=0, column=0, padx=2, pady=2)
 
         botones = [
             ['7', '8', '9', '/'],
@@ -41,7 +41,7 @@ class Calculadora():
 
         for row, filas in enumerate(botones):
             for column, text in enumerate(filas):
-                button = tk.Button(win, text=f"{text}", bg="grey", fg="white", command= lambda t=text: self.show(t))
+                button = tk.Button(win, text=f"{text}", bg="grey", fg="white", command= lambda t=text: self.show(t), font=("Helvetica", 20))
                 button.grid(row=row+1, column=column, padx=2, pady=2, sticky="nsew")
                 win.grid_rowconfigure(row+1, weight=1)
                 win.grid_columnconfigure(column, weight=1)
