@@ -36,7 +36,6 @@ class BaseTK:
             button = Button(self.win, text=text, bg="grey", fg="black", font=("Arial", 12))
             button.grid(row=row, column=column, padx=5, pady=5)
 
-
 if __name__ == "__main__":
     win = Tk()
     app = BaseTK(win)
