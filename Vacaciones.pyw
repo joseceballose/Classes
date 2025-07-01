@@ -16,6 +16,20 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from datetime import datetime
 from PIL import Image, ImageTk
+import sys
+import os
+
+# Función para obtener la ruta correcta de los recursos
+def resource_path(relative_path):
+    """Obtiene la ruta absoluta de un recurso, funciona tanto en desarrollo como en PyInstaller"""
+    try:
+        # PyInstaller crea una carpeta temporal y almacena la ruta en _MEIPASS
+        base_path = sys._MEIPASS
+
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
 
 #
 NAME_ENTERPRISE = 'PEPSI S.A.S'
@@ -49,15 +63,14 @@ def calculate_values(name, last_name, puesto, antiguedad):
             
     messagebox.showinfo("Informacion", f"{name} {last_name} tiene {days} días de descanso")
 
-
 class WindowCentral(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Sitema Vacacional Pepsi")
         self.geometry("400x350")
         self.resizable(False, False)
-        self.iconbitmap('icono.ico')
-        img = Image.open('Pepsi.png')
+        self.iconbitmap(resource_path('icono.ico'))
+        img = Image.open(resource_path('Pepsi.png'))
         img = img.resize((100, 100))
         logo_img = ImageTk.PhotoImage(img)
         logo = tk.Label(self, image=logo_img)
@@ -86,7 +99,7 @@ class WindowTerms(tk.Toplevel):
         super().__init__(master)
         self.title('Términos y condiciones')
         self.geometry("400x300")
-        self.iconbitmap('icono.ico')
+        self.iconbitmap(resource_path('icono.ico'))
         self.resizable(False, False)
         self.name_user = name_user
         text = f"{name_user} aceptas qué al usar la aplicación debe ingresar datos personales qué serán unicamenten usados para el cáculo den vacaciones según la politica de la empresa"
@@ -108,7 +121,7 @@ class WindowCalculate(tk.Toplevel):
         super().__init__(master)
         self.title('Cálculo días de vacaciones')
         self.geometry('400x300')
-        self.iconbitmap('icono.ico')
+        self.iconbitmap(resource_path('icono.ico'))
         self.resizable(False, False)
 
         # Frame 1: Datos personales
