@@ -1,0 +1,51 @@
+### Ejercicio de Gestión de Estudiantes con Tkinter
+
+#### Descripción General
+
+Desarrollar una aplicación de gestión de estudiantes utilizando Tkinter en Python. La aplicación debe permitir registrar, listar, ver detalles y comparar estudiantes. Los datos de los estudiantes deben ser almacenados en un archivo JSON para que persistan entre sesiones, incluso si se cierra la aplicación.
+
+#### Funcionalidades Requeridas
+
+1. _Pantalla de Inicio_:
+
+   - Mostrar un menú con opciones para navegar a:
+     - Registrar Estudiante
+     - Listar Estudiantes
+     - Comparar Estudiantes
+
+2. _Pantalla de Registro de Estudiantes_:
+
+   - Campos de entrada para:
+     - Nombre (texto)
+     - Apellido (texto)
+     - Curso (lista desplegable con opciones: Matemáticas, Ciencias, Historia)
+     - Sexo (lista desplegable con opciones: Masculino, Femenino)
+     - Edad (número)
+   - Opción para cargar una imagen del estudiante desde el sistema de archivos.
+   - Botón para guardar los datos del estudiante, que se almacenarán en un archivo JSON.
+
+3. _Pantalla de Listado de Estudiantes_:
+
+   - Mostrar una lista de estudiantes registrados.
+   - Opción para seleccionar un estudiante y ver sus detalles.
+   - Opción para eliminar un estudiante de la lista, actualizando el archivo JSON después de la eliminación.
+
+4. _Pantalla de Detalles del Estudiante_:
+
+   - Mostrar información detallada del estudiante seleccionado:
+     - Nombre
+     - Apellido
+     - Curso
+     - Sexo
+     - Edad
+   - Mostrar la imagen del estudiante.
+
+5. _Pantalla de Comparación de Estudiantes_:
+   - Permitir seleccionar dos estudiantes de listas desplegables.
+   - Comparar sus datos (curso, sexo, edad) y mostrar la comparación en un cuadro de diálogo.
+
+#### Requisitos Técnicos
+
+- Utilizar programación orientada a objetos (POO) para estructurar la aplicación.
+- Implementar manejo de errores al cargar y guardar datos en el archivo JSON.
+- Asegurarse de que los datos se mantengan entre sesiones de la aplicación.
