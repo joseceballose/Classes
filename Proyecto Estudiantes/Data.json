@@ -1,27 +1,30 @@
 [
     {
-        "name": "Jose Alejandro",
-        "last name": "Ceballos",
-        "degree": 10,
-        "grades": {
-            "Ingles": 4,
-            "Matematicas": 3,
-            "Ciencias Sociales": 2,
-            "Ciencias Naturales": 5
-        },
-        "image rout": "34b9d726-7067-4e17-8b7e-78bdc7268053.png"
-    },
-    {
         "name": "Sebastian",
         "last name": "Ramirez",
-        "age": "14",
-        "degree": "10",
+        "age": 15,
+        "gender": "Masculino",
+        "degree": 10,
         "grades": {
             "Ingles": 3,
             "Matematicas": 3,
             "Ciencias Sociales": 3,
             "Ciencias Naturales": 3
         },
-        "image rout": "7d98717c-a465-4fa4-885e-a92ce3fc76c9.png"
+        "image rout": "56a574c4-03dd-432f-ab05-6901de010f50.png"
+    },
+    {
+        "name": "Jose Alejandro",
+        "last name": "Ceballos",
+        "age": 16,
+        "gender": "Masculino",
+        "degree": 10,
+        "grades": {
+            "Ingles": 4,
+            "Matematicas": 4,
+            "Ciencias Sociales": 5,
+            "Ciencias Naturales": 5
+        },
+        "image rout": "4d54eb75-19f2-4ce9-a206-6938fcd3a420.png"
     }
 ]

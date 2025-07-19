@@ -16,15 +16,16 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 # Funcíon para organizar los datos --> diccionario
-def organize_data(name, last_name, age, degree, grades, image_rout):
+def organize_data(name, last_name, age, gender, degree, grades, image_rout):
     extention = os.path.splitext(image_rout)[1]
     Id = f"{uuid4()}{extention}"
     save_image(image_rout, Id)
     data = {
         "name": name,
         "last name": last_name,
-        "age": age,
-        "degree": degree,
+        "age": int(age),
+        "gender": gender,
+        "degree": int(degree),
         "grades": grades,
         "image rout": Id,
     }
@@ -152,6 +153,7 @@ class RegisterWindow(tk.Toplevel):
         name = self.name.get().strip().title()
         last_name = self.last_name.get().strip().title()
         age = self.age.get()
+        gender = self.option_gender.get()
         degree = self.degree.get()
         grades = self.grades
         image_rout = self.image_rout
@@ -162,7 +164,7 @@ class RegisterWindow(tk.Toplevel):
             print("a")
             return
 
-        self.new_student = organize_data(name, last_name, age, degree, grades, image_rout)
+        self.new_student = organize_data(name, last_name, age, gender, degree, grades, image_rout)
 
         carpeta = os.path.join(os.path.abspath("."), "Proyecto Estudiantes")
         os.makedirs(carpeta, exist_ok=True)
@@ -289,7 +291,6 @@ class ListerWindow(tk.Toplevel):
         
         tk.Label(self.frame1, text="Estudiantes", font=("Arial", 16)).pack(pady=5)
         self.names = self.recover_names()
-        print(self.names)
         self.name = ttk.Combobox(self.frame1, values=self.names, state="readonly")
         self.name.pack(pady=5)
         
@@ -313,7 +314,15 @@ class ListerWindow(tk.Toplevel):
         self.label_degree.pack()
         
         self.name.bind("<<ComboboxSelected>>", self.get_info)
-    
+        tk.Button(self.frame2, text="Volver", font=("Arial", 14), command=self.go_back).pack(pady=40)
+        
+        
+        
+    # Función para volver a CentralWindow
+    def go_back(self):
+        self.withdraw()
+        CentralWindow()
+        
     def get_info(self, event):
         selected_name = self.name.get()
         for estudiante in self.data:
@@ -324,6 +333,18 @@ class ListerWindow(tk.Toplevel):
                 self.label_age.config(text=f"Edad: {estudiante["age"]}")
                 self.label_gender.config(text=f"Genero: {estudiante["gender"]}")
                 self.label_degree.config(text=f"Grado: {estudiante["degree"]}")
+                image_name = estudiante["image rout"]
+                complete_rout = os.path.join("Proyecto Estudiantes", "Images", image_name)
+                try:
+                    self.image = Image.open(complete_rout)
+                    self.image.thumbnail((150, 150))
+                    self.photo = ImageTk.PhotoImage(self.image)
+                    self.img = tk.Label(self.frame2, image=self.photo)
+                    self.img.image = self.photo
+                    self.img.pack(pady=10)
+                except FileNotFoundError:
+                    messagebox.showerror("Error", "Imagen no ecnontrada")
+                    
                 
         
     def recover_names(self):
